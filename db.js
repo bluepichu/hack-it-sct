@@ -1,6 +1,6 @@
 var mjs = require("mongojs");
 console.log("Connecting DB to " + dbUrl);
-var db = mjs.connect(dbUrl, ["pokemon", "items", "moves", "dungeons", "teams", "users", "members"]);
+var db = mjs.connect(dbUrl, ["users", "problems"]);
 var ObjectId = mjs.ObjectId;
 
 var query = function(table, query, returnFields, cb, first){

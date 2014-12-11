@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var http = require("http");
+var exec = requiere("child_process").exec;
 
 var POST = "POST";
 var GET = "GET";
@@ -11,73 +12,98 @@ var args = process.argv;
 
 var HASH_COUNT = 1024;
 
-dbUrl = "mongodb://rescueapi:apipw@dogen.mongohq.com:10002/app31342165";
-
-if(args[2] == "-l"){
-    console.log("LOCAL");
-    dbUrl = "mongodb://localhost:27017/rescue";
-}
+dbUrl = "mongodb://submitter:thisisasecurepassword@ds061620.mongolab.com:61620/heroku_app32406169";
 
 port = process.env.PORT || 1337;
 
 var db = require("./db");
 
+var routes = {
+    "/": "/index.html",
+    "/problems": "/problems.html",
+    "/css/style.css": "/css/style.css"
+};
+
+var __dir = "web";
+
 http.createServer(function(req,res) {
-    console.log("RECEIVED REQUEST");
-    console.log("\tMethod: " + req.method);
-    console.log("\tURL:    " + req.url);
-    for(var i = 0; i < apiMethods.length; i++){
-        if(apiMethods[i].check(req.method, req.url)){
-            console.log("\tFound match: " + apiMethods[i].pattern);
-            res.setHeader("Content-Type", "application/json");
-            try{
-                result = apiMethods[i].execute(req, res);
-            } catch(error) {
-                console.log("caught: " + error);
-                cb(res)({result: "failed", error: "Server error.  Are you missing required fields?"});
-            }
-            return;
+    console.log("Request: " + req.method + " " + req.url);
+    var cookies = parseCookie(res.headers.cookie);
+    if(req.method == GET){
+        if(req.url in routes){
+            getFile(__dir + routes[req.url], function(data){
+                res.write(data);
+                res.end();
+            });
+        } else {
+            res.write(404);
+            res.end();
         }
     }
-    console.log("Returning 404.");
-    res.writeHead(404);
-    res.end();
 }).listen(port, "0.0.0.0");
 
 console.log("Server running on port: " + port);
 
-
-function RestMethod(method, pattern, exec){
-    this.method = method;
-    this.pattern = pattern;
-    this.exec = exec;
-    
-    this.check = function(reqMethod, reqUrl){
-        return this.method == reqMethod && reqUrl.match(this.pattern);
-    }
-    
-    this.execute = function(req, res){
-        return exec(req, res);
-    }
+var getFile = function(url, cb) {
+    url = url.split("..")
+    url = __dir + url;
+    fs.readFile(url, function(err, data) {
+        if (err || !data) {
+            cb("404")
+            console.log("Error on "+url);
+            return
+        }
+        cb(data);
+    })
 }
 
-function cb(res){
-    return function(data){
-        res.write(JSON.stringify(data));
-        res.end();
-        console.log("sent " + data);
+var parseCookie = function(cookieString) {
+    if (!cookieString) {
+        return {}
     }
+    var spl = cookieString.split(";");
+    var ret = {}
+    for (var i in spl) {
+        var sple = spl[i].split("=");
+        var key = sple[0];
+        var value = spl[i].split(key+"=")[1];
+        if (key[0] == " ") {
+            key = key.substr(1)
+        }
+        ret[key] = value;
+    }
+    return ret;
 }
 
-function getPostData(req, res, cb){
-    body = "";
-    
-    req.on("data", function(chunk){
-        body += chunk;
-    });
-    
-    req.on("end", function(){
-        body = JSON.parse(body);
-        cb(req, res, body);
-    });
+var getMime = function(str) {
+    if (!str) {
+        return "text/plain";
+    }
+    str = str.toLowerCase();
+    switch (str) {
+        case "html":
+            return "text/html"
+            case "txt":
+            return "text/plain"
+            case "js":
+        case "min":
+        case "json":
+            return "application/javascript"
+            case "gif":
+            return "image/gif"
+            case "jpeg":
+        case "jpg":
+            return "image/jpeg"
+            case "png":
+        case "bmp":
+        case "ico":
+            return "image/png"
+            case "css":
+            return "text/css"
+            case "xml":
+            return "text/xml"
+            default:
+            return "text/html"
+
+    }
 }
