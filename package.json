@@ -1,0 +1,33 @@
+{
+    "name": "rescuers-companion-api",
+    "version": "0.1.0",
+    "description": "API for The Rescuer's Companion",
+    "main": "serv.js",
+    "scripts": {
+        
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/bluepichu/rescuers-companion-api.git"
+    },
+    "keywords": [
+        "pokemon",
+        "mystery dungeon",
+        "pokemon mystery dungeon",
+        "pmd",
+        "rescuer",
+        "rescuer's",
+        "companion",
+        "the rescuer's companion"
+    ],
+    "author": "bluepichu",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/bluepichu/integrader/issues"
+    },
+    "homepage": "https://github.com/bluepichu/rescuers-companion-api",
+    "dependencies": {
+        "mongojs": "^0.13.0",
+        "sha1": "^0.0.1"
+    }
+}
