@@ -2,6 +2,8 @@
 
 var http = require("http");
 //var exec = require("child_process").exec;
+var fs = require("fs");
+var hbs = require("handlebars");
 
 var POST = "POST";
 var GET = "GET";
@@ -16,6 +18,11 @@ dbUrl = "mongodb://submitter:thisisasecurepassword@ds061620.mongolab.com:61620/h
 
 port = process.env.PORT || 1337;
 
+if(args[2] == "-l"){
+    console.log("LOCAL");
+    dbUrl = "mongodb://localhost:27017/hack-it";
+}
+
 var db = require("./db");
 
 var routes = {
@@ -28,15 +35,16 @@ var __dir = "web";
 
 http.createServer(function(req,res) {
     console.log("Request: " + req.method + " " + req.url);
-    var cookies = parseCookie(res.headers.cookie);
+    var cookies = parseCookie(req.headers.cookie);
     if(req.method == GET){
         if(req.url in routes){
-            getFile(__dir + routes[req.url], function(data){
+            getHbs(__dir + routes[req.url], {name: "bluepichu"}, function(data){
+                res.writeHead(200, {"Content-Type": "text/html"});
                 res.write(data);
                 res.end();
             });
         } else {
-            res.write(404);
+            res.writeHead(404, {});
             res.end();
         }
     }
@@ -44,14 +52,24 @@ http.createServer(function(req,res) {
 
 console.log("Server running on port: " + port);
 
+var getHbs = function(url, data, cb){
+    getFile(url, function(dat){
+        if(dat == "404"){
+            return "404";
+        } else {
+            template = hbs.compile("" + dat);
+            cb(template(data));
+        }
+    });
+}
+
 var getFile = function(url, cb) {
-    url = url.split("..")
-    url = __dir + url;
+    console.log(url);
     fs.readFile(url, function(err, data) {
         if (err || !data) {
-            cb("404")
+            cb("404");
             console.log("Error on "+url);
-            return
+            return;
         }
         cb(data);
     })
