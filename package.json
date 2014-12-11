@@ -19,7 +19,7 @@
     "homepage": "https://github.com/bluepichu/rescuers-companion-api",
     "dependencies": {
         "mongojs": "^0.13.0",
-        "sha1": "^0.0.1",
-        "child_process":  "^0.10.33"
+        "sha1": "^0.0.1"
+        
     }
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var http = require("http");
-var exec = requiere("child_process").exec;
+//var exec = require("child_process").exec;
 
 var POST = "POST";
 var GET = "GET";
