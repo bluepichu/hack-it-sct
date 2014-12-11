@@ -19,6 +19,8 @@
     "homepage": "https://github.com/bluepichu/rescuers-companion-api",
     "dependencies": {
         "mongojs": "^0.13.0",
-        "sha1": "^0.0.1"
+        "sha1": "^0.0.1",
+        "handlebars": "^2.0.0",
+        "fs": "^0.0.2"
     }
 }
