@@ -1,25 +1,16 @@
 {
-    "name": "rescuers-companion-api",
+    "name": "hack-it",
     "version": "0.1.0",
-    "description": "API for The Rescuer's Companion",
+    "description": "Hack It",
     "main": "serv.js",
     "scripts": {
         
     },
     "repository": {
         "type": "git",
-        "url": "git://github.com/bluepichu/rescuers-companion-api.git"
+        "url": "git://github.com/bluepichu/hack-it.git"
     },
-    "keywords": [
-        "pokemon",
-        "mystery dungeon",
-        "pokemon mystery dungeon",
-        "pmd",
-        "rescuer",
-        "rescuer's",
-        "companion",
-        "the rescuer's companion"
-    ],
+    "keywords": [],
     "author": "bluepichu",
     "license": "ISC",
     "bugs": {
