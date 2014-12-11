@@ -35,17 +35,43 @@ var __dir = "web";
 
 http.createServer(function(req,res) {
     console.log("Request: " + req.method + " " + req.url);
+    url = req.url;
     var cookies = parseCookie(req.headers.cookie);
     if(req.method == GET){
-        if(req.url in routes){
-            getHbs(__dir + routes[req.url], {name: "bluepichu"}, function(data){
+        if(url in routes){
+           url = routes[url]; 
+        }
+        
+        if(url == "/index.html"){
+            getHbs(__dir + url, {}, function(data){
                 res.writeHead(200, {"Content-Type": "text/html"});
                 res.write(data);
                 res.end();
             });
+        } else if(url == "/problems.html"){
+            db.query("problems", {}, {$all: true}, function(dat){
+                getHbs(__dir + url, {problems: dat}, function(data){
+                    res.writeHead(200, {"Content-Type": "text/html"});
+                    res.write(data);
+                    res.end();
+                });
+            });
         } else {
-            res.writeHead(404, {});
-            res.end();
+            try{
+                getFile(__dir + url, function(data){
+                    if(data == "404"){
+                        res.writeHead(404, {});
+                        res.end();
+                    } else {
+                        res.writeHead(200, {"Content-Type": "text/html"});
+                        res.write(data);
+                        res.end();
+                    }
+                });
+            } catch(e){
+                res.writeHead(404, {});
+                res.end();
+            }
         }
     }
 }).listen(port, "0.0.0.0");
