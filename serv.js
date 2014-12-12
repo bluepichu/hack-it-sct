@@ -318,7 +318,7 @@ var getPostData = function(req, res, cb){
 
 var validate = function(file, test, cb){
     console.log("Validating " + file);
-    var proc = spawn("java -cp solutions " + file, [], {stdio: "pipe"});
+    var proc = spawn("java.exe -cp solutions " + file, [], {stdio: "pipe"});
     proc.stdin.write(test);
     proc.stdin.end();
 
@@ -329,7 +329,7 @@ var validate = function(file, test, cb){
 
 var test = function(file, test, cb){
     console.log("Testing " + file);
-    var proc = spawn("java -cp solutions " + file, [], {stdio: "pipe"});
+    var proc = spawn("java.exe -cp solutions " + file, [], {stdio: "pipe"});
     proc.stdin.write(test);
     proc.stdin.end();
 
