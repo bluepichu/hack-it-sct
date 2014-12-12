@@ -202,6 +202,7 @@ http.createServer(function(req,res) {
                                 });
                             });
                         } else {
+                            res.writeHead(500, {});
                             res.end();
                         }
                     });
