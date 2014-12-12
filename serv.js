@@ -16,7 +16,7 @@ var args = process.argv;
 
 var HASH_COUNT = 4;
 
-var START_TIME = 1418412600000;
+var START_TIME = 0//1418412600000;
 
 dbUrl = "mongodb://submitter:thisisasecurepassword@ds061620.mongolab.com:61620/heroku_app32406169";
 
