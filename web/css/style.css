@@ -1,0 +1,223 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+}
+
+header {
+    background: #8E24AA;
+    padding: 8px 10%;
+    color: #FFFFFF;
+    box-shadow: 0px 0px 2px 4px rgba(0, 0, 0, 0.26);
+    height: 64px;
+}
+
+h1 {
+    margin: 0px;
+    font-size: 36px;
+    font-family: "Lobster", sans-serif;
+    height: 48px;
+    color: #FFFFFF;
+    display: inline-block;
+}
+
+header a {
+    text-decoration: none;
+}
+
+div.content-main {
+    width: 100%;
+    min-height: calc(100% - 112px);
+    padding: 16px calc(10% + 16px);
+}
+
+footer {
+    height: 48px;
+    border-top: 1px solid rgba(0, 0, 0, .26);
+    font-family: "NTR", sans-serif;
+    text-align: right;
+    color: #FFFFFF;
+    font-size: 18px;
+    padding: 6px 10%;
+    background: #8E24AA;
+    border-top: rgba(0, 0, 0, .54);
+}
+
+h2 {
+    font-family: "Russo One", sans-serif;
+    font-size: 32px;
+    margin: 16px;
+}
+
+.container h2 {
+    margin: -16px -16px 0px;
+    padding: 16px;
+    border-radius: 6px 6px 0px 0px;
+    color: #FFFFFF;
+    background: #9C27B0;
+}
+
+.container.correct h2 {
+    background: #4CAF50;
+}
+
+.container.incorrect h2 {
+    background: #F44336;
+}
+
+input[type=text],
+input[type=password] {
+    padding: 0px 4px;
+    border: 0px;
+    border-bottom: 1px solid #00B0FF;
+}
+
+input {
+    margin: 4px 0px;
+    font-family: "NTR", sans-serif;
+}
+
+input[type=submit] {
+    border: 0px;
+    background: #00B0FF;
+    color: #FFFFFF;
+    padding: 0px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+::-webkit-input-placeholder {
+   color: rgba(0, 0, 0, .26);
+}
+
+:-moz-placeholder {
+   color: rgba(0, 0, 0, .26);
+}
+
+::-moz-placeholder {
+   color: rgba(0, 0, 0, .26);
+}
+
+:-ms-input-placeholder {  
+   color: rgba(0, 0, 0, .26);
+}
+
+:focus::-webkit-input-placeholder {
+   color: rgba(0, 0, 0, .54);
+}
+
+:focus:-moz-placeholder {
+   color: rgba(0, 0, 0, .54);
+}
+
+:focus::-moz-placeholder {
+   color: rgba(0, 0, 0, .54);
+}
+
+:focus:-ms-input-placeholder {  
+   color: rgba(0, 0, 0, .54);
+}
+
+:focus {
+    outline: none;
+}
+
+
+.container {
+    padding: 16px;
+    border: 1px solid rgba(0, 0, 0, .26);
+    border-radius: 6px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, .12);
+    margin: 16px 0px;
+}
+
+h3 {
+    font-family: "Russo One", sans-serif;
+    font-size: 24px;
+}
+
+body {
+    background: #ECECEC;
+}
+
+p,
+.problem-content {
+    font-family: "NTR", sans-serif;
+    font-size: 18px;
+    line-height: 20px;
+}
+
+pre.prettyprint {
+    border: 0px;
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 14px;
+}
+
+ul {
+    font-family: "NTR", sans-serif;
+}
+
+li {
+    font-size: 18px;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+.scoreboard {
+    font-family: "NTR", sans-serif;
+    width: calc(100% - 32px);
+    border-collapse: collapse;
+    margin: 16px;
+}
+
+.scoreboard tr td {
+    width: 9%;
+    text-align: center;
+}
+
+.scoreboard tr>:first-child {
+    width: 18%;
+}
+
+.scoreboard tr>:nth-child(2) {
+    width: 10%;
+}
+
+th,
+td {
+    border: 1px solid rgba(0, 0, 0, .12);
+    position: relative;
+    padding-top: 4px;
+}
+
+.incorrect-count {
+    font-size: 12px;
+    color: #00B0FF;
+    position: absolute;
+    right: 2px;
+    bottom: -6px;
+}
+.subtitle {
+    font-size: 24px;
+    color: #CB9AD8;
+    margin-left: 4px;
+}
+
+.header-item {
+    float: right;
+    font-family: "Lobster", sans-serif;
+    padding: 4px 8px;
+    font-size: 20px;
+    margin: 8px 8px;
+    color: #FFFFFF;
+    border-radius: 4px;
+}
+
+.header-item:hover {
+    background: #7B1FA2;
+}

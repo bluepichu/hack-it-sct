@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title>SCT - Hack It! &raquo; Problems</title>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=NTR' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/run_prettify.js" type="text/javascript"></script>
+        <link href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.css" type="text/css">
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $("form").submit(function(e){
+                    e.preventDefault();
+
+                    console.log($(this).serialize());
+
+                    var file = $(this).find("[type=file]")[0].files[0];
+                    if(file){
+                        var reader = new FileReader();
+                        var fileName = $(this).attr("data-problem");
+                        reader.readAsText(file, "UTF-8");
+                        reader.onload = function (evt) {
+                            var xhr = new XMLHttpRequest();
+                            xhr.onload = function(){
+                                console.log(this.response);
+                            };
+                            xhr.open("POST", "/submit", true);
+                            xhr.send(JSON.stringify({problem: fileName, test: evt.target.result}));
+
+                            return false;
+                        }
+                        reader.onerror = function (evt) {
+                            document.getElementById("fileContents").innerHTML = "error reading file";
+                        }
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <a href="/"><h1>Hack It! <span class="subtitle">A Mini-Contest by TJHSST SCT</span></h1></a>
+            <a class="header-item" href="/scoreboard">Scoreboard</a>
+            <a class="header-item" href="/rules">Rules</a>
+            <a class="header-item" href="/problems">Problems</a>
+            <a class="header-item" href="/">Home</a>
+        </header>
+        <div class="content-main">
+            {{#if loginRequired}}
+            <div class="container incorrect">
+                <h2>Warning</h2>
+                <p>You're not logged in, so you can't submit any solutions!</p>
+            </div>
+            {{/if}}
+            {{#if problems}}
+            {{#each problems}}
+            <div class="container">
+                <h2>{{title}}</h2>
+                <h3>Statement</h3>
+                <div class="problem-content">
+                    {{{statement}}}
+                </div>
+                <h3>Solution ({{language}})</h3>
+                <pre class="prettyprint">{{solution}}</pre>
+                <form data-problem="{{file}}">
+                    <input type="file" />
+                    <input type="submit" />
+                </form>
+            </div>
+            {{/each}}
+            {{else}}
+            <h2>No problems are available at this time.</h2>
+            {{/if}}
+        </div>
+        <footer>
+            Created by Matthew Savage for TJHSST SCT
+        </footer>
+    </body>
+</html>

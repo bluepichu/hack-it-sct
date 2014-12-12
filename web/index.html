@@ -1,0 +1,101 @@
+<html>
+    <head>
+        <title>SCT - Hack It! &raquo; Login</title>
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=NTR' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Russo+One' rel='stylesheet' type='text/css'>
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        
+        <script>
+            $(document).ready(function(){
+                $("#register").submit(function(e){
+                    e.preventDefault();
+                    
+                    var username = $("#register #username").val();
+                    var password = $("#register #password").val();
+                    var confirm = $("#register #confirm").val();
+
+                    if(username == "" || password == "" || password != confirm){
+                        return false;
+                    }
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function(){
+                        if(this.status == 200){
+                            response = JSON.parse(this.responseText);
+                            if(response.ok){
+                                document.cookie = "username=" + username
+                                document.cookie = "token=" + response.token;
+                                window.location.replace("/problems");
+                            }
+                        }
+                    };
+                    xhr.open("POST", "/register", true);
+                    xhr.send(JSON.stringify({username: username, password: password}));
+                    
+                    return false;
+                });
+
+                $("#login").submit(function(e){
+                    e.preventDefault();
+                    
+                    var username = $("#login #username").val();
+                    var password = $("#login #password").val();
+
+                    if(username == "" || password == ""){
+                        return false;
+                    }
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function(){
+                        if(this.status == 200){
+                            response = JSON.parse(this.responseText);
+                            if(response.ok){
+                                document.cookie= "username=" + username;
+                                document.cookie= "token=" + response.token;
+                                window.location.replace("/problems");
+                            }
+                        }
+                    }
+                    xhr.open("POST", "/login", true);
+                    xhr.send(JSON.stringify({username: username, password: password}));
+                    
+                    return false;
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <header>
+            <a href="/"><h1>Hack It! <span class="subtitle">A Mini-Contest by TJHSST SCT</span></h1></a>
+            <a class="header-item" href="/scoreboard">Scoreboard</a>
+            <a class="header-item" href="/rules">Rules</a>
+            <a class="header-item" href="/problems">Problems</a>
+            <a class="header-item" href="/">Home</a>
+        </header>
+        <div class="content-main">
+            <div class="container">
+                <h2>Login</h2>
+                <form id="login">
+                    <input type="text" id="username" placeholder="Username" /><br />
+                    <input type="password" id="password" placeholder="Password" /><br />
+                    <input type="submit" id="submit" text="Login" />
+                </form>
+            </div>
+            
+            <div class="container">
+                <h2>Register</h2>
+                <form id="register">
+                    <input type="text" id="username" placeholder="Username" /><br />
+                    <input type="password" id="password" placeholder="Password" /><br />
+                    <input type="password" id="confirm" placeholder="Confirm Password" /><br />
+                    <input type="submit" id="submit" text="Login" />
+                </form>
+            </div>
+        </div>
+        <footer>
+            Created by Matthew Savage for TJHSST SCT
+        </footer>
+    </body>
+</html>
